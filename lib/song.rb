@@ -38,31 +38,36 @@ class Song
       self.find_by_name(song_name) || self.create_by_name(song_name)
     end
 # ----------------------------------------------------
+    def self.alphabetical
+    self.all.sort_by{|song| song.name}
+    end
+# ----------------------------------------------------
     def self.new_from_filename(filename)
-        spltarr= filename.split("-")
-        spltarr2 = spltarr[1].split("mp3")
-        spltarr3 = spltarr2[0].strip.split(".")
+        data = filename.split(" - ")
+        artist_name = data[0]
+        data2 = data[1].split(".")
+        name = data2[0]
         song = self.new
-        song.artist_name= spltarr[0].strip
-        song.name = spltarr3[0]
-        song
+        song.artist_name = artist_name
+        song.name = name
+      song
     end
 # ----------------------------------------------------
     def self.create_from_filename(filename)
-      spltarr= filename.split("-")
-      spltarr2 = spltarr[1].split("mp3")
-      spltarr3 = spltarr2[0].strip.split(".")
+      data = filename.split(" - ")
+      artist_name = data[0]
+      data2 = data[1].split(".")
+      name = data2[0]
       song = self.new
-      song.artist_name= spltarr[0].strip
-      song.name = spltarr3[0]
+      song.artist_name = artist_name
+      song.name = name
       self.all << song
     end
 # ----------------------------------------------------
-    def self.alphabetical
-      self.all.sort_by{|song| song.name}
-    end
-# ----------------------------------------------------
+
     def self.destroy_all
       self.all.clear
     end
+# ----------------------------------------------------
+
 end
